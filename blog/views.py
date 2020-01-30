@@ -62,9 +62,7 @@ def post(request,url):
         pass
     try:
         p = Post.objects.get(url = url)
-        return render(request,'blog_test.html',locals())
+        print("blog"+str(p.pk)+".html")
+        return render(request,"blog"+str(p.pk)+".html",locals())
     except:
         return redirect('/main')
-
-def test(request):
-    return render(request,'test.html',locals())

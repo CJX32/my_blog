@@ -31,8 +31,36 @@
                 </ul>
             </div>
             <body data-spy="scroll" data-target="#myScrollspy" data-offset="1">
-            <div class='col-lg-8 col-sm-12 col-12 col-md-12'>
+            <div class='col-sm-12 col-lg-8'>
             {% block post %}{% endblock %}
+            <div class='d-block d-lg-none'>
+                <ul class="navbar-nav align-items-center">
+                    <li class="nav-item">
+                        <br><br><br><br><br><br><br>
+                        {% if like == 'like' %}
+                        <form method='POST'>
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-primary" name='like' value='unlike'>
+                        <svg class="icon" aria-hidden="true">
+                        <use xlink:href="#icon-liked"></use>
+                        </svg>
+                        已赞({{ p.like }})
+                        </button>
+                        </form>
+                        {% else %}
+                         <form method='POST'>
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-light" name='like' value='like'>
+                        <svg class="icon" aria-hidden="true">
+                        <use xlink:href="#icon-dianzan" fill='#000000'></use>
+                        </svg>
+                        点赞({{ p.like }})
+                        </button>
+                        </form>
+                        {% endif %}
+                    </li>
+                </ul>
+            </div>
             </div>
             <div class='col-lg-2 d-none d-lg-block'>
             {% block nav %}{% endblock %}

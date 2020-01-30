@@ -1,0 +1,58 @@
+<!--base.html-->
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta charset = 'utf-8'>
+        {% load bootstrap4 %}
+        {% bootstrap_css %}
+        {% bootstrap_javascript jquery='full' %}
+        {% load static %}
+        <script src='{% static "iconfont/iconfont.js" %}'></script>
+        <style>
+            .icon {
+            width: 1.5em;
+            height: 1.5em;
+            vertical-align: -0.15em;
+            fill: #000000;
+            overflow: hidden;
+            }
+        </style>
+    </head>
+    <header>
+    <div class = 'container'>
+    <ul class="nav nav-pills">
+        <li class = 'nav-item'>
+            {% if state == 'blog' %}
+            <a class='nav-link active' href='/main'>
+            {% else %}
+            <a class='nav-link' href='/main'>
+            {% endif %}
+            <svg class="icon" aria-hidden="true">
+            <use xlink:href="#icon-boke"></use>
+            </svg>
+            blog
+            </a>
+        </li>
+        <li class = 'nav-item'>
+            {% if state == 'contact' %}
+            <a class='nav-link active' href='/contact'>
+            {% else %}
+            <a class='nav-link' href='/contact'>
+            {% endif %}
+            <svg class="icon" aria-hidden="true">
+            <use xlink:href="#icon-icon-test" style='background-color:#000000;'></use>
+            </svg>
+            给我留言
+            </a>
+        </li>
+    </ul>
+    </div>
+    </header>
+    {% block content %} {% endblock %}
+    <footer class="text-center text-muted py-4">
+        <div class="container">
+            <p style='font-size:10pt;'>Copyright@2020</p>
+        </div>
+    </footer>
+</html>

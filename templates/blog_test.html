@@ -1,0 +1,158 @@
+{% extends 'post.html' %}
+{% block post %}
+{% load static %}
+<br>
+<h2>在VS Code下配置C语言的运行环境(macOS篇)</h2>
+<p class="font-weight-light text-right">作者：希 <br>{{ p.date|date:'Y M d' }}</p>
+<p id='section1'>
+<h5>前言</h5>
+VS Code(全称Visual Studio Code)是巨硬2015年四月发布的跨平台源代码编辑器。有别于自家老大哥Visual Studio, VS Code凭借其轻量化、免费、开源、跨平台的特点迅速
+俘获了大批忠实粉丝。如果不是编写很大的工程，VS Code提供了一个很好的选项。它不仅启动迅速、功能强大，微软还不断通过版本更新为其提供继承的版本控制和终端等强大的功能。
+但VS Code本质上属于一个文本编辑器，并不具备编译、debug的功能。好在微软和开发者为其编写了丰富的插件，为VS Code提供了无限的可能。本文就将演示如何在macOS系统下搭建VS Code的C语言开发环境。
+</p>
+<div style='line-height:15px;' id='section2'>
+<h5>步骤:</h5>
+    <p>1、下载并安装Visual Studio Code</p>
+    <p>2、在VS Code中安装相应的C语言插件</p>
+    <p>3、配置task.json文件完成可执行文件文件的编译</p>
+    <o>4、编写launch.json文件并运用debugger帮助debug</p>
+</div>
+<br>
+<div id='section3'>
+    <h5>1、下载并安装Visual Studio Code</h5>
+    <p>VS Code是免费、开源的编辑器。去相应的微软官网下载即可。
+    <a href='https://code.visualstudio.com'>https://code.visualstudio.com<a>
+    <p>
+    <img src={% static 'images/blog1/download.png' %} width="100%">
+    <p>点击下载(Download for Mac)后，微软提供了两个选项分别是稳定版(Stable)和快速通道内测版(Insiders)。如果没有强烈体验新功能的欲望，建议选择稳定版，提供更稳定的体验</p>
+    <p>下载完成后只需要将<strong> ‘下载‘ </strong>文件夹下的app拖动到<strong> ‘应用’ </strong>文件夹下即可完成安装</p>
+</div>
+<br>
+<div id='section4'>
+    <h5>2、在VS Code中安装相应的C语言插件</h5>
+    <p>在安装C语言插件之前，笔者再啰嗦一句，如果你是VS Code新手又对英文环境不太熟悉，微软为你提供了简体中文语言插件。在左侧侧边栏点击最后一个模块。<img src='{% static 'images/blog1/extension.png'%}' width=50px><p>
+    <p>在搜索栏搜索<strong> 'chinese' </strong>即可,点击第一个搜索结果，再在右侧的结果页面点击安装，VS Code会为你自动完成安装。这就体现了VS Code一个得天独厚的优势--拥有强大的插件，并且安装十分简洁，并不需要VS一样繁杂的程序。
+    后面的插件安装均是搜索，然后点击安装即可，笔者就不再多赘述。</p>
+    <img src={% static 'images/blog1/extension-chinese.png' %} width="100%">
+    <br><br>
+    <h6>1、C/C++</h6>
+    <p>这是微软自家的C语言插件，提供了C语言的编译、debug、实时intellisense等功能，是搭建C语言环境最基础的插件。</p>
+    <img src={% static 'images/blog1/extension-c-m.png'%} width="100%">
+    <br><br>
+    <h6>2、CodeLLDB</h6>
+    <p>这里笔者需要解释一下。本身应用C/C++插件编写launch.json文件就可以debug。但笔者在更新到macOS Catalina和最新Xcode后，debugger无法正常工作（无法击中断点）。
+    GitHub下也有人提出这个问题，截止发稿时问题还没有被修复。
+    <a href='https://github.com/microsoft/vscode-cpptools/issues/3829'>https://github.com/microsoft/vscode-cpptools/issues/3829</a>
+    这时就需要CodeLLDB这个插件。这个插件可以帮我们正常debug。</p>
+    <img src={% static 'images/blog1/extension-lldb.png'%} width="100%">
+</div>
+<br>
+<div id='section5'>
+  <h5>3、编译可执行文件</h5>
+  <p>C语言是高级语言，计算机无法直接运行，需要用gcc/clang编译器将其编译成可执行文件才可以运行</p>
+  <p>这里需要注意，VS Code之后的一切操作都<strong class="text-danger">必须要在文件夹内进行</strong>。首先我们点击第一个模块然后单击'open folder'。这是你可打开一个现有文件夹
+  或者创建一个新文件夹。这个文件夹就是你的根工作目录。</p>
+  <h6>1、只包含一个源文件的简单程序</h6>
+  <p>你可以使用传统的新建文件的方法建立一个.c文件。笔者这里运用VS Code继承的终端创建一个main.c文件。上拉底边栏，并点击<strong>TERMINAL</strong>栏。
+  输入<kbd>touch main.c</kbd>指令并单机回车即可新建main.c文件。<p>
+  <video width="100%" autoplay muted loop ><source src={% static 'films/blog1/new.mp4' %} type="video/mp4">抱歉你的浏览器不支持视频播放</video>
+  <p>编译文件同样很简单这时你只需要单击顶部菜单栏，选择<mark>'Terminal'</mark>-><mark>'Run Build Task...'</mark>。这时他会弹出两个选项，选择<mark>C/C++:gcc build active file</mark>。如下图所示</p>
+  <img src={% static 'images/blog1/build-option.png' %} width="100%">
+  <p>编译完成后左侧文件栏会多一个名为main的可执行文件，将它拖到底部终端并点击回车即可得到执行结果</p>
+   <video width="100%" autoplay muted loop><source src={% static 'films/blog1/hello_world.mp4' %}>抱歉你的浏览器不支持视频播放</video>
+  <br>
+  <h6>2、包含多个文件的工程</h6>
+  <p>一个工程中往往包含多个.c文件。这是编译就不能靠默认的task.json文件了。需要自行编写。此例中笔者新建了两个文件 functions.h 和 functions.c。这是再次点击<mark>'Terminal'</mark>-><mark>'Run Build Task...'</mark>。这次<strong class='text-danger'>不要</strong>
+  直接点击gcc build active file,而是点击右侧的齿轮符号对task.json文件进行编辑。点击后会显示task.json的编辑页面。</p>
+  <img src={% static 'images/blog1/task.png' %} width="100%">
+  <p>task.json中有几个参数</p>
+  <p>--label:你的task.json文件的名字（标签）可以改为自己熟悉的名字方便日后重复使用</p>
+  <p>--<strong class='text-primary'>command</strong>:将被执行的gcc编译指令，是task.json文件最重要的参数</p>
+  <p>--problematcher:用与匹配编译中产生的错误</p>
+  <p>其他选项分别删去或保留不动。将task.json改为如下所示：</p>
+<pre>
+  <kbd>{                                                       </kbd>
+  <kbd class="text-secondary">  // See https://go.microsoft.com/fwlink/?LinkId=733558 </kbd>
+  <kbd class="text-secondary">  // for the documentation about the tasks.json format  </kbd>
+  <kbd>  "version": "2.0.0",                                   </kbd>
+  <kbd>  "tasks": [                                            </kbd>
+  <kbd>      {                                                 </kbd>
+  <kbd>          "type": "shell",                              </kbd>
+  <kbd>          "label": "gcc build active file",             </kbd>
+  <kbd>          "command": "gcc -g *.c -o main",              </kbd>
+  <kbd>          "problemMatcher": [                           </kbd>
+  <kbd>              "$gcc"                                    </kbd>
+  <kbd>          ],                                            </kbd>
+  <kbd>          "group": "build"                              </kbd>
+  <kbd>      }                                                 </kbd>
+  <kbd>  ]                                                     </kbd>
+  <kbd>}                                                       </kbd>
+</pre>
+  <p>gcc指令中<mark>-g</mark>可以帮助debugger找到执行文件；<mark>-o</mark>可以为生成可执行文件命名。这里<amrk>*.c</mark>代表所有.c文件，你也可以分开写为main.c functions.c。但记住要将所有要变一个.c文件都上，.h 文件不需要写。
+  gcc编译指令的格式为:<p><kbd>gcc -g 源文件名.c -o 生成文件名</kbd></p></p>
+  <p>再次点击<mark>'Run Build Task...'</mark>-><mark>gcc build active file</mark>即可编译文件。</p>
+</div>
+<div id='section6'>
+  <h5>4、利用LLDB debug</h5>
+  <p>厌倦了百年不变的'printf'debug大法？VS Code可以让你通过GDB/LLDB debug。但由于macOS现阶段的bug。笔者不能保证编写原本的launch.json文件能够成功debug。
+  这里就需要用到我们之前的CodeLLDB插件。
+  首先点击左边栏第4个按钮<img src={% static 'images/blog1/debug.png'%} width=50px>再点击右侧下面<mark>create a launch.json file</mark>弹出选项卡后点击
+  <img src={% static 'images/blog1/debug_option.png'%} width="100%">选择<mark>LLDB</mark>。
+  <p>将launch.json改为如下：</p>
+  <pre>
+  <kbd>{                                                                                    </kbd>
+  <kbd class="text-secondary">      // Use IntelliSense to learn about possible attributes.                        </kbd>
+  <kbd class="text-secondary">      // Hover to view descriptions of existing attributes.                          </kbd>
+  <kbd class="text-secondary">      // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387 </kbd>
+  <kbd>      "version": "0.2.0",                                                            </kbd>
+  <kbd>      "configurations": [                                                            </kbd>
+  <kbd>        {                                                                            </kbd>
+  <kbd>          "type": "lldb",                                                            </kbd>
+  <kbd>          "request": "launch",                                                       </kbd>
+  <kbd>          "name": "Debug",                                                           </kbd>
+  <kbd>          "program": "${workspaceFolder}/main",                                      </kbd>
+  <kbd>          "args": [],                                                                </kbd>
+  <kbd>          "cwd": "${workspaceFolder}",                                               </kbd>
+  <kbd>          "preLaunchTask": "gcc build active file",                                  </kbd>
+  <kbd>        }                                                                            </kbd>
+  <kbd>      ]                                                                              </kbd>
+  <kbd>}                                                                                    </kbd>
+  </pre>
+  </p>
+  <p>参数的含义：</p>
+  <p>--type:launch.json的类型，有:launch,lldb等，默认lldb不需要修改</p>
+  <p>--name:launch.json文件的名称，方便日后查找</p>
+  <p>--<strong class='text-primary'> program</strong>：需要debug的程序，${workspaceFolder}是你的根工作路径不需要修改，/后改为你要改为的程序名，这里为main</p>
+  <p>--preLaunchTask(选填)：顾名思义，preLaunchTask后面的task会在debug之前先被执行，通常是build（编译）的task，这里改为之前创建的<mark>“gcc build active file”</mark>，这样就可以每次debug新生成的程序</p>
+  <p>这时返回文件页面，单机行号之前就可以设置断点。<br><img src={% static 'images/blog1/breakpoint.png' %} width=450px><img src={% static 'images/blog1/start_debug.png' %} width=450px></p>
+  <p>再回到debug界面点击绿色三角形即可开始debug,顶部控制条可以控制debug进度，左侧状态栏可以查看变量的值。</p>
+  <img src={% static 'images/blog1/hit.png'%} width="100%">
+  <br><br>
+  <h6/>到此本次教程就全部结束了，VS Code的很多其他功能有待读者去慢慢探索，谢谢观看🙏！</h6>
+</div>
+{% endblock %}
+{% block nav%}
+<nav id="myScrollspy" class='position-fixed'>
+      <ul class="nav nav-pills flex-column">
+        <li class="nav-item">
+          <a class="nav-link active" href="#section1">前言</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#section2">目录</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#section3">安装VS Code</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#section4">安装插件</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#section5">编译可执行文件</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#section6">Debug</a>
+        </li>
+      </ul>
+    </nav>
+{% endblock %}
+

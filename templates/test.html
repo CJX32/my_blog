@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container" style="padding: 40px;">
+    <div class="row visible-on">
+        <div class="col-xs-6 col-sm-3" style="background-color: #dedef8;
+        box-shadow: inset 1px -1px 1px #444, inset -1px 1px 1px #444;">
+            <span class="d-xs-none">特别小型</span>
+            <span class="d-sm-block d-md-none">✔ 在特别小型设备上可见</span>
+        </div>
+        <div class="col-xs-6 col-sm-3" style="background-color: #dedef8;
+        box-shadow: inset 1px -1px 1px #444, inset -1px 1px 1px #444;">
+            <span class="hidden-sm">小型</span>
+            <span class="d-md-block d-lg-none">✔ 在小型设备上可见</span>
+        </div>
+        <div class="clearfix visible-xs"></div>
+        <div class="col-xs-6 col-sm-3" style="background-color: #dedef8;
+        box-shadow: inset 1px -1px 1px #444, inset -1px 1px 1px #444;">
+            <span class="hidden-md">中型</span>
+            <span class="visible-md">✔ 在中型设备上可见</span>
+        </div>
+        <div class="col-xs-6 col-sm-3" style="background-color: #dedef8;
+        box-shadow: inset 1px -1px 1px #444, inset -1px 1px 1px #444;">
+            <span class="hidden-lg">大型</span>
+            <span class="visible-lg">✔ 在大型设备上可见</span>
+        </div>
+    </div>
+</div>
+{% endblock %}

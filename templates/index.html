@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+<div class = 'container'>
+    <br>
+    {% for blog in blogs %}
+    <div class = 'row'>
+        <div class = 'col-lg-8'>
+            <div class="card">
+                <div class="card-body">
+                <h4 class="card-title">{{blog.title}} 
+                <img src = "{% static blog.cover %}" width=200 height=130 class="float-right">
+                </h4>
+                <p class="card-text">{{blog.brief}}</p>
+                <form action='/posts/{{blog.url}}'>
+                <button class = 'btn btn-primary' type = 'submit' value = '查看博客'>查看博客</button>
+                </form>
+                </div>
+            </div>
+            <br>
+        </div>
+        <div class = 'col-lg-2 offset-lg-2'>
+        <button type="button" class="btn btn-secondary" disabled>
+            {{ blog.date | date:"Y /M /d"}}
+        </button>
+        <br><br>
+        <button type="button" class="btn btn-success" disabled>
+            👍{{ blog.like}}
+        </button>
+        
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

@@ -5,12 +5,25 @@
     <br>
     {% for blog in blogs %}
     <div class = 'row'>
-        <div class = 'col-lg-8'>
+        <div class = 'col-lg-8 d-none d-md-block'>
             <div class="card">
                 <div class="card-body">
                 <h4 class="card-title">{{blog.title}} 
                 <img src = "{% static blog.cover %}" width=200 height=130 class="float-right">
                 </h4>
+                <p class="card-text">{{blog.brief}}</p>
+                <form action='/posts/{{blog.url}}'>
+                <button class = 'btn btn-primary' type = 'submit' value = '查看博客'>查看博客</button>
+                </form>
+                </div>
+            </div>
+            <br>
+        </div>
+         <div class = 'col-lg-8 d-md-none d-block'>
+            <div class="card">
+                <div class="card-body">
+                <h4 class="card-title">{{blog.title}}</h4>
+                <img src = "{% static blog.cover %}" width=100% height=130 class="float-right">
                 <p class="card-text">{{blog.brief}}</p>
                 <form action='/posts/{{blog.url}}'>
                 <button class = 'btn btn-primary' type = 'submit' value = '查看博客'>查看博客</button>

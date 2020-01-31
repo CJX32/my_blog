@@ -20,12 +20,15 @@ def contact(request):
                 if post:
                     repeat = 'repeat'
             except:
+
                 post = Comment.objects.create(nickname=visitor_name, comment=comment)
+
                 mail_body = u'''
                 昵称：{}
                 留言：{}
                 '''.format(visitor_name,comment)
-                email = EmailMessage('网站留言',mail_body,'meteorskysun@gmail.com',['meteorskysun@outlook.com'])
+
+                email = EmailMessage('网站留言',mail_body,'meteorskysun@outlook.com',['meteorskysun@outlook.com'])
                 email.send()
                 if visitor_name != None:
                     send = 'send'
@@ -60,6 +63,33 @@ def post(request,url):
             p.save()
     except:
         pass
+    if request.method == 'POST':
+        print('enter')
+        try:
+            print('enter')
+            visitor_name = request.POST['nickname']
+            comment = request.POST['comment']
+            print(visitor_name)
+            print(comment)
+            try:
+                post = Comment.objects.get(nickname=visitor_name,comment=comment)
+                if post:
+                    repeat = 'repeat'
+            except:
+
+                post = Comment.objects.create(nickname=visitor_name, comment=comment)
+
+                mail_body = u'''
+                昵称：{}
+                留言：{}
+                '''.format(visitor_name,comment)
+
+                email = EmailMessage('网站留言',mail_body,'meteorskysun@outlook.com',['meteorskysun@outlook.com'])
+                email.send()
+                if visitor_name != None:
+                    send = 'send'
+        except:
+            pass
     try:
         p = Post.objects.get(url = url)
         print("blog"+str(p.pk)+".html")

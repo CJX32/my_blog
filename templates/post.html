@@ -1,4 +1,7 @@
 {% extends 'base.html' %}
+{% block title %}
+{{ p.title }}
+{% endblock %}
 {% block content %}
     <div class='container-fluid'>
         <div class='row'>
@@ -64,6 +67,32 @@
             </div>
             <div class='col-lg-2 d-none d-lg-block'>
             {% block nav %}{% endblock %}
+            </div>
+            <div class='col-12 col-lg-8'>
+                <form method = 'POST'>
+                {% csrf_token %}
+                <div class="form-group offset-lg-4">
+                    <label for = 'nickname'>你的名字（昵称）:</label>
+                    <input id = 'nickname' name = 'nickname' type = 'text' required class='rounded'>
+                    <br>
+                    <label for = 'comment'>评论:</label>
+                    <textarea class="form-control" id = 'comment' name = 'comment' rows = '8' required style='border-radius:1rem'></textarea>
+                    <br>
+                    <button type = 'submit' class = 'btn btn-primary'>提交</button>
+                    {% if send %}
+                    <div class="alert alert-success alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <strong>成功!</strong> 感谢你的留言🙏
+                    </div>
+                    {% endif %}
+                    {% if repeat %}
+                    <div class="alert alert-danger alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    谢谢 请勿<strong>重复</strong>提交🙏
+                    </div>
+                    {% endif %}
+                </div>
+                </form>
             </div>
             </body>
         </div>

@@ -66,3 +66,6 @@ def post(request,url):
         return render(request,"blog"+str(p.pk)+".html",locals())
     except:
         return redirect('/main')
+
+def direct(request):
+    return redirect('/main')

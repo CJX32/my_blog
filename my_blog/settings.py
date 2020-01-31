@@ -29,7 +29,7 @@ SECRET_KEY = config['SECRET_KEY']
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['64.227.52.117']
+ALLOWED_HOSTS = ['64.227.52.117','www.cjx32.com']
 
 
 # Application definition

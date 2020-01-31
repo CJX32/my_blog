@@ -26,7 +26,7 @@ def contact(request):
                 留言：{}
                 '''.format(visitor_name,comment)
                 email = EmailMessage('网站留言',mail_body,'meteorskysun@gmail.com',['meteorskysun@outlook.com'])
-                '''email.send()'''
+                email.send()
                 if visitor_name != None:
                     send = 'send'
         except:
